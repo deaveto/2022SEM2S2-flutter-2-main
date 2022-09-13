@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.woman, size: 100),
-                              Text("Mujer"),
+                              Text("Mujer o"),
                             ],
                           ),
                           decoration: BoxDecoration(
