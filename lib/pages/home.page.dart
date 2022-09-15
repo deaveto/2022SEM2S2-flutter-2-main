@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double peso = 68.5;
   int edad = 38;
+  int estatura = 0;
+  double IMC = 166;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.woman, size: 100),
-                              Text("Mujer o"),
+                              Text("Mujer"),
                             ],
                           ),
                           decoration: BoxDecoration(
@@ -81,6 +83,27 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Altura"),
+                              Text(
+                                IMC.toString() + " cm",
+                                style: TextStyle(fontSize: 40),
+                              ),
+                              Slider(
+                                value: IMC,
+                                max: 200,
+                                divisions: 200,
+                                label: IMC.round().toString(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    IMC = value;
+                                  });
+                                },
+                              )
+                            ],
+                          ),
                           decoration: BoxDecoration(
                             //BORDE DEL CUADRO REDONDE
                             color: Colors.grey,
@@ -186,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           decoration: BoxDecoration(
-                            //BORDE DEL CUADRO REDONDE hhjjh hh
+                            //BORDE DEL CUADRO REDONDE
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -199,6 +222,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => DetallaPge())));
+                IMC = peso / (estatura * estatura);
               },
               child: Container(
                 height: 50,
