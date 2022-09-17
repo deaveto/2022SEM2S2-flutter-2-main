@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double peso = 68.5;
   int edad = 38;
-  int estatura = 0;
-  double IMC = 166;
+  double IMC = 0;
+  double altura = 166;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,17 +88,19 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text("Altura"),
                               Text(
-                                IMC.toString() + " cm",
+                                altura.round().toString() + " cm",
                                 style: TextStyle(fontSize: 40),
                               ),
                               Slider(
-                                value: IMC,
+                                activeColor: Colors.blueAccent,
+                                inactiveColor: Colors.white,
+                                value: altura,
+                                min: 50,
                                 max: 200,
-                                divisions: 200,
-                                label: IMC.round().toString(),
+                                divisions: 250,
                                 onChanged: (value) {
                                   setState(() {
-                                    IMC = value;
+                                    altura = value;
                                   });
                                 },
                               )
@@ -131,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text("Peso"),
                               Text(
-                                peso.toString() + " Kg",
+                                peso.round().toString() + " Kg",
                                 style: TextStyle(fontSize: 40),
                               ),
                               Row(
@@ -220,9 +222,44 @@ class _HomePageState extends State<HomePage> {
                 )),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => DetallaPge())));
-                IMC = peso / (estatura * estatura);
+                String estad = "";
+                Color estadoColor = Colors.black;
+                String textos = "";
+                IMC = peso / ((altura / 100) * (altura / 100));
+                if (IMC < 18.5) {
+                  estad = "Bajo Peso";
+                  estadoColor = Color.fromARGB(255, 243, 171, 62);
+                }
+                if ((IMC > 18.5) & (IMC < 24.9)) {
+                  estad = "Normal";
+                  estadoColor = Colors.green;
+                  textos = "Tienes un peso corporal normal. ¡Buen trabajo!";
+                }
+                if ((IMC > 25) & (IMC < 29.9)) {
+                  estad = "Sobrepeso";
+                  estadoColor = Color.fromARGB(255, 250, 142, 0);
+                }
+                if ((IMC > 30) & (IMC < 34.9)) {
+                  estad = "Obesidad I";
+                  estadoColor = Color.fromARGB(255, 243, 67, 54);
+                }
+                if ((IMC > 35) & (IMC < 39.9)) {
+                  estad = "Obesidad II";
+                  estadoColor = Color.fromARGB(255, 247, 39, 25);
+                }
+                if ((IMC > 40) & (IMC < 49.9)) {
+                  estad = "Obesidad III";
+                  estadoColor = Color.fromARGB(255, 202, 14, 1);
+                }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => DetallaPge(
+                              valor: IMC,
+                              estado: estad,
+                              colorEstado: estadoColor,
+                              texto: textos,
+                            ))));
               },
               child: Container(
                 height: 50,
